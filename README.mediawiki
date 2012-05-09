@@ -30,7 +30,7 @@ This plugin is designed for paginating lists populated by ajax. If you have any 
 : The includeFirst property lets you specify whether to include the 'first' pagination link.
 : default: true
 
- ;includeLast
+;includeLast
 : The includeLast property lets you specify whether to include the 'last' pagination link.
 : default: true
 
