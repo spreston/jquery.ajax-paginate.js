@@ -15,6 +15,7 @@
             'prevText': 'Prev',
             'firstText': 'First',
             'lastText': 'Last',
+            'offset': 0,
             'paginationSelector': this.selector, 
             'pageClickCallback': function(){
                                     alert('Get Data from page ' + $(this).attr('data-page') + ' limit=' + settings.limit);
@@ -29,7 +30,12 @@
         }
 
         if (settings.pageClickCallbackData.hasOwnProperty('limit')){
+            settings.limit = settings.pageClickCallbackData.limit;
             delete settings.pageClickCallbackData.limit;
+        }
+
+        if (settings.pageClickCallbackData.hasOwnProperty('offset')){
+            delete settings.pageClickCallbackData.offset;
         }
 
         return this.each(function() {        
@@ -39,13 +45,13 @@
     
             if (settings.count < limit){
                 rows = '';
-            }else if (settings.maxPages > totalPages){
+            }else if ((settings.maxPages > totalPages) || (settings.maxPages == 0)){
                 for (var i=1; i<=totalPages; i++){
                     rows += "<li data-page='"+i+"' " + ((i == settings.currentPage) ? "class='current' " : "" ) + ">" + i + "</li>";
                 }
             }else{
-                rows += settings.includeFirst ? "<li data-page='1' >"+settings.firstText+"</li>" : "";
-                rows += settings.includePrev ? "<li data-page='"+(parseInt(settings.currentPage) - 1)+"' >"+settings.prevText+"</li>" : "";
+                rows += settings.includeFirst ? "<li "+((settings.currentPage == 1) ? 'class="disabled" ': '')+"data-page='1' >"+settings.firstText+"</li>" : "";
+                rows += settings.includePrev ? "<li "+((settings.currentPage == 1) ? 'class="disabled" ': '')+"data-page='"+(parseInt(settings.currentPage) - 1)+"' >"+settings.prevText+"</li>" : "";
             
                 var startPage = settings.currentPage - parseInt((settings.maxPages - 1) / 2);
     
@@ -61,8 +67,8 @@
                     rows += "<li data-page='"+i+"' " + ((i == settings.currentPage) ? "class='current' " : "" ) + ">" + i + "</li>";
                 }
     
-                rows += settings.includeNext ? "<li data-page='"+(parseInt(settings.currentPage) + 1)+"' >"+settings.nextText+"</li>" : "";
-                rows += settings.includeLast ? "<li data-page='"+totalPages+"' >"+settings.lastText+"</li>" : "";
+                rows += settings.includeNext ? "<li "+((settings.currentPage == totalPages) ? 'class="disabled" ': '')+"data-page='"+(parseInt(settings.currentPage) + 1)+"' >"+settings.nextText+"</li>" : "";
+                rows += settings.includeLast ? "<li "+((settings.currentPage == totalPages) ? 'class="disabled" ': '')+"data-page='"+totalPages+"' >"+settings.lastText+"</li>" : "";
         
             } 
        
@@ -72,6 +78,7 @@
                 $(settings.paginationSelector + ' li').click(function(){
                     settings.pageClickCallbackData.page = $(this).attr('data-page');
                     settings.pageClickCallbackData.limit = settings.limit;
+                    settings.pageClickCallbackData.offset = settings.limit * (settings.pageClickCallbackData.page - 1);
                     settings.pageClickCallback(settings.pageClickCallbackData);
                 });
             }

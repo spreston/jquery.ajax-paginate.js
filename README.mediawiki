@@ -1,0 +1,132 @@
+== jquery.ajax-paginate.js ==
+
+This plugin is designed for paginating lists populated by ajax. If you have any suggestions, let me know, and I'll try to work them in as quickly as possible.
+
+=== Requirements ===
+
+# A function to get the data from the database that takes one parameter--data--which is a javascript object containing all the parameters you need to send through $.post or $.load.
+# A page to handle ajax requests. By default, this plugin passes parameters named 'limit', 'page', and 'offset'.
+# A ul to hold the pagination links
+
+=== Options ===
+
+;limit
+: The limit property determines the number of records per page.
+: default: 10
+
+;currentPage
+: The currentPage property lets you specify a starting page. This will be auto populated if you pass a pageClickCallbackData object with the page property.
+: default: 1
+
+;maxPages
+: The maxPages property lets you specify the maximum number of pages to display in the pagination. Set this to 0 if you want to display all of the links. 
+: default: 10
+
+;count
+: The count property is the total number of objects that match the database query. This must be returned by your server side ajax page and passed to the plugin from the ajax success function.
+: default: 0
+
+;includeFirst
+: The includeFirst property lets you specify whether to include the 'first' pagination link.
+: default: true
+
+ ;includeLast
+: The includeLast property lets you specify whether to include the 'last' pagination link.
+: default: true
+
+;includePrev
+: The includePrev property lets you specify whether to include the 'previous' pagination link.
+: default: true
+
+;includeNext
+: The includeNext property lets you specify whether to include the 'next' pagination link.
+: default: true
+
+;firstText
+: The firstText property lets you specify the text that appears on the 'first' pagination link.
+: default: 'First'
+
+;lastText
+: The lastText property lets you specify the text that appears on the 'last' pagination link.
+: default: 'Last'
+
+;prevText
+: The prevText property lets you specify the text that appears on the 'previous' pagination link.
+: default: 'Prev'
+
+;nextText
+: The nextText property lets you specify the text that appears on the 'next' pagination link.
+: default: 'Next'
+
+;pageClickCallback
+: The pageClickCallback is a function which executes the ajax call and its success function.
+: default: 
+    <code>function(){
+        alert('Get Data from page ' + $(this).attr('data-page') + ' limit=' + settings.limit);
+    }</code>
+
+;pageClickCallbackData
+: The pageClickCallbackData property is a javascript object that contains all the data you'll be passing through your ajax call.
+: default: {}
+
+=== Usage === 
+
+In the following example, I'm assuming that the ajax call returns an object in the following format:
+<code>
+object = {
+    'count': #,
+    'responseCode': #,
+    0: { //data... },
+    1: { //data... },
+    //...
+}
+</code>
+
+<code>
+getData = function(data){
+    
+    var url = '';
+
+    url = '/ajax_url';
+
+    if (!data){
+        var data = { page: 1, limit: 10, property1: 'property1', property2: 'property2'};
+    }
+        
+    $.post(url, data, function(response){
+
+        obj = $.parseJSON(response);
+        
+        if (obj.responseCode && (obj.responseCode == 404)){
+            $('ul#data_list').html('<li>There are no matching records</li>');
+        }else{
+           
+            $('ul#data_list').html('');
+            
+            for (key in obj){
+                if (!obj.hasOwnProperty(key) || (key == 'count') || (key == 'responseCode')){
+                    continue;
+                }
+
+                //populate ul#data_list
+                               
+            }//end for
+ 
+            $('ul#pagination_links').ajaxPaginate({
+                'count': obj.count,
+                'pageClickCallback': getData,
+                'pageClickCallbackData': data                
+            });
+             
+        }//end if-else
+        
+    });//end .post
+
+}
+
+$(document).ready(function(){
+    getData();
+});
+
+</code>
+
