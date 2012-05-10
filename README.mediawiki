@@ -61,9 +61,9 @@ This plugin is designed for paginating lists populated by ajax. If you have any 
 ;pageClickCallback
 : The pageClickCallback is a function which executes the ajax call and its success function.
 : default: 
-    <code>function(){
-        alert('Get Data from page ' + $(this).attr('data-page') + ' limit=' + settings.limit);
-    }</code>
+<code>function(){
+    alert('Get Data from page ' + $(this).attr('data-page') + ' limit=' + settings.limit);
+}</code>
 
 ;pageClickCallbackData
 : The pageClickCallbackData property is a javascript object that contains all the data you'll be passing through your ajax call.
