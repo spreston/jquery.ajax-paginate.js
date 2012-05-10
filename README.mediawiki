@@ -66,12 +66,25 @@ This plugin is designed for paginating lists populated by ajax. If you have any 
  }
 
 ;pageClickCallbackData
-: The pageClickCallbackData property is a javascript object that contains all the data you'll be passing through your ajax call.
+: The pageClickCallbackData property is a javascript object that contains all the data you'll be passing through your ajax call. If you do not pass a data object, one will be built with the minimum parameters of limit, page, and offset.
+
 : default: {}
 
 === Usage === 
 
+The basic ajaxPaginate call looks like this:
+
+ $('ul#pagination_links').ajaxPaginate({
+    'count': count, //You must pass a count for the plugin to generate the correct number of pages.
+    'pageClickCallback': getData, //You must pass a function which gets data from a database.
+    'pageClickCallbackData': data
+            //Data is the sole parameter for the pageClickCallback function above.
+            //If you do not pass a data object, one will be built with the minimum parameters of limit, page, and offset.
+ });
+
 In the following example, I'm assuming that the ajax call returns an object in the following format:
+
+
  object = {
      'count': #,
      'responseCode': #,
