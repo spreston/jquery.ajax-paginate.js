@@ -87,7 +87,7 @@ In the following example, I'm assuming that the ajax call returns an object in t
      url = '/ajax_url';
  
      if (!data){
-         var data = { page: 1, limit: 10, property1: 'property1', property2: 'property2'};
+         var data = { page: 1, limit: 10, category1: 'category1', category2: 'category2'};
      }
          
      $.post(url, data, function(response){
