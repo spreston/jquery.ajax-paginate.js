@@ -47,11 +47,11 @@
                 rows = '';
             }else if ((settings.maxPages > totalPages) || (settings.maxPages == 0)){
                 for (var i=1; i<=totalPages; i++){
-                    rows += "<li data-page='"+i+"' " + ((i == settings.currentPage) ? "class='current' " : "" ) + ">" + i + "</li>";
+                    rows += "<li data-page='"+i+"' class='pagination" + ((i == settings.currentPage) ? " current" : "" ) + "' >" + i + "</li>";
                 }
             }else{
-                rows += settings.includeFirst ? "<li "+((settings.currentPage == 1) ? 'class="disabled" ': '')+"data-page='1' >"+settings.firstText+"</li>" : "";
-                rows += settings.includePrev ? "<li "+((settings.currentPage == 1) ? 'class="disabled" ': '')+"data-page='"+(parseInt(settings.currentPage) - 1)+"' >"+settings.prevText+"</li>" : "";
+                rows += settings.includeFirst ? "<li id='pagination_first' "+((settings.currentPage == 1) ? 'class="disabled" ': '')+"data-page='1' >"+settings.firstText+"</li>" : "";
+                rows += settings.includePrev ? "<li id='pagination_prev' "+((settings.currentPage == 1) ? 'class="disabled" ': '')+"data-page='"+(parseInt(settings.currentPage) - 1)+"' >"+settings.prevText+"</li>" : "";
             
                 var startPage = settings.currentPage - parseInt((settings.maxPages - 1) / 2);
     
@@ -64,11 +64,11 @@
                 endPage = startPage + settings.maxPages - 1;
     
                 for (var i=startPage; i<=endPage; i++){
-                    rows += "<li data-page='"+i+"' " + ((i == settings.currentPage) ? "class='current' " : "" ) + ">" + i + "</li>";
+                    rows += "<li data-page='"+i+"' class='pagination" + ((i == settings.currentPage) ? " current" : "" ) + "' >" + i + "</li>";
                 }
     
-                rows += settings.includeNext ? "<li "+((settings.currentPage == totalPages) ? 'class="disabled" ': '')+"data-page='"+(parseInt(settings.currentPage) + 1)+"' >"+settings.nextText+"</li>" : "";
-                rows += settings.includeLast ? "<li "+((settings.currentPage == totalPages) ? 'class="disabled" ': '')+"data-page='"+totalPages+"' >"+settings.lastText+"</li>" : "";
+                rows += settings.includeNext ? "<li id='pagination_next' "+((settings.currentPage == totalPages) ? 'class="disabled" ': '')+"data-page='"+(parseInt(settings.currentPage) + 1)+"' >"+settings.nextText+"</li>" : "";
+                rows += settings.includeLast ? "<li id='pagination_last' "+((settings.currentPage == totalPages) ? 'class="disabled" ': '')+"data-page='"+totalPages+"' >"+settings.lastText+"</li>" : "";
         
             } 
        
