@@ -82,6 +82,8 @@ The basic ajaxPaginate call looks like this:
             //If you do not pass a data object, one will be built with the minimum parameters of limit, page, and offset.
  });
 
+Call ajaxPaginate from within the function which you will pass as the pageClickCallback. This callback function retrieves the info from the database, then calls ajaxPaginate again to repaginate the list.
+
 In the following example, I'm assuming that the ajax call returns an object in the following format:
 
 
