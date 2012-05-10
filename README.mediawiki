@@ -128,8 +128,8 @@ In the following example, I'm assuming that the ajax call returns an object in t
 
  <!-- ...HTML -->
  <div id='data_list_container' >
-
+ 
      <ul id='pagination_links' ></ul>
      <ul id='data_list' ></ul><!--#populate data here-->
-
+ 
  </div>
