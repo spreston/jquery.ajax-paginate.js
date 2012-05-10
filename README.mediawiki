@@ -61,9 +61,9 @@ This plugin is designed for paginating lists populated by ajax. If you have any 
 ;pageClickCallback
 : The pageClickCallback is a function which executes the ajax call and its success function.
 : default: 
-<code>function(){
-    alert('Get Data from page ' + $(this).attr('data-page') + ' limit=' + settings.limit);
-}</code>
+ function(){
+     alert('Get Data from page ' + $(this).attr('data-page') + ' limit=' + settings.limit);
+ }
 
 ;pageClickCallbackData
 : The pageClickCallbackData property is a javascript object that contains all the data you'll be passing through your ajax call.
@@ -72,61 +72,58 @@ This plugin is designed for paginating lists populated by ajax. If you have any 
 === Usage === 
 
 In the following example, I'm assuming that the ajax call returns an object in the following format:
-<code>
-object = {
-    'count': #,
-    'responseCode': #,
-    0: { //data... },
-    1: { //data... },
-    //...
-}
-</code>
+ object = {
+     'count': #,
+     'responseCode': #,
+     0: { //data... },
+     1: { //data... },
+     //...
+ }
 
-<code>
-getData = function(data){
-    
-    var url = '';
-
-    url = '/ajax_url';
-
-    if (!data){
-        var data = { page: 1, limit: 10, property1: 'property1', property2: 'property2'};
-    }
-        
-    $.post(url, data, function(response){
-
-        obj = $.parseJSON(response);
-        
-        if (obj.responseCode && (obj.responseCode == 404)){
-            $('ul#data_list').html('<li>There are no matching records</li>');
-        }else{
-           
-            $('ul#data_list').html('');
-            
-            for (key in obj){
-                if (!obj.hasOwnProperty(key) || (key == 'count') || (key == 'responseCode')){
-                    continue;
-                }
-
-                //populate ul#data_list
-                               
-            }//end for
+ getData = function(data){
+     
+     var url = '';
  
-            $('ul#pagination_links').ajaxPaginate({
-                'count': obj.count,
-                'pageClickCallback': getData,
-                'pageClickCallbackData': data                
-            });
+     url = '/ajax_url';
+ 
+     if (!data){
+         var data = { page: 1, limit: 10, property1: 'property1', property2: 'property2'};
+     }
+         
+     $.post(url, data, function(response){
+ 
+         obj = $.parseJSON(response);
+         
+         if (obj.responseCode && (obj.responseCode == 404)){
+             $('ul#data_list').html('<li>There are no matching records</li>');
+         }else{
+            
+             $('ul#data_list').html('');
              
-        }//end if-else
-        
-    });//end .post
+             for (key in obj){
+                 if (!obj.hasOwnProperty(key) || (key == 'count') || (key == 'responseCode')){
+                     continue;
+                 }
+ 
+                 //populate ul#data_list
+                                
+             }//end for
+  
+             $('ul#pagination_links').ajaxPaginate({
+                 'count': obj.count,
+                 'pageClickCallback': getData,
+                 'pageClickCallbackData': data                
+             });
+              
+         }//end if-else
+         
+     });//end .post
+ 
+ }
+ 
+ $(document).ready(function(){
+     getData();
+ });
 
-}
 
-$(document).ready(function(){
-    getData();
-});
-
-</code>
 
